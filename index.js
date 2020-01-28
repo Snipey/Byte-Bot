@@ -6,7 +6,7 @@ const exceptions = require('./exceptions')
 
 // CHANGE VALUES BELOW HERE
 let actualBio = "Software Engineer | Snipey.dev";
-let followLimit = 20000;
+let followLimit = 100;
 
 
 // CHANGE NOTHING BELOW HERE
@@ -47,7 +47,7 @@ const main = async () => {
 
 const determineState = async () => {
 	const profile = await client.me()
-	if (profile.data.followingCount > profile.data.followerCount) {
+	if (Users.size >= followLimit) {
 		this.APP_STATE = 4
 	} else {
 		this.APP_STATE = 3
@@ -136,7 +136,7 @@ const startFollowing = async (post) => {
 			client.follow(user.id)
 			Logger.log(`Followed user: ${user.username} id: ${user.id}`);
 			await sleep(450);
-			if(profile.data.followingCount >= profile.data.followerCount) {
+			if(Users.size >= followLimit) {
 				this.APP_STATE === 4
 				Logger.info("Changing mode to UNFOLLOW")
 				break
